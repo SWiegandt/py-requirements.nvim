@@ -3,6 +3,7 @@ local parser = require('py-requirements.parser')
 local state = require('py-requirements.state')
 local ui = require('py-requirements.ui')
 local user = require('py-requirements.user')
+local cmp_config = require('cmp.config')
 
 local function initialize()
     local buf = user.buffer()
@@ -13,6 +14,13 @@ local function initialize()
         vim.schedule(function()
             api.get_versions(module.name)
         end)
+    end
+    if state.config.cmp_sorting then
+        cmp_config.set_buffer({
+            sorting = {
+                comparators = state.config.cmp_sorting,
+            },
+        }, buf)
     end
 end
 

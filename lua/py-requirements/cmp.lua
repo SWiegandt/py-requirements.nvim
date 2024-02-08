@@ -1,6 +1,7 @@
 local api = require('py-requirements.api')
 local core = require('py-requirements.core')
 local parser = require('py-requirements.parser')
+local compare = require('cmp.config.compare')
 
 ---@param module PythonModule
 local function get_completion_items(module)
@@ -59,5 +60,14 @@ end
 function M.setup()
     require('cmp').register_source(M:get_debug_name(), M)
 end
+
+M.sort_by = {
+    version = {
+        compare.exact,
+        compare.score,
+        compare.sort_text,
+        compare.offset,
+    },
+}
 
 return M

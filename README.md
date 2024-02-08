@@ -94,26 +94,16 @@ cmp.setup({
 The ideal (latest to oldest version) ordering is defined by the `sortText` attribute of each
 completion item sent to `nvim-cmp`.
 
-By default this comparator has been disabled by `nvim-cmp`. There are various ways to enable
-it including at a file type level. Below is an example of enabling it globally, note that
-this will likely impact the ordering of other completion sources.
+By default this comparator has been disabled by `nvim-cmp`. Comparators for requirements files
+can be enabled by configuring `nvim-cmp` directly, or by setting the `cmp_sorting` option in the plugin config
+to a list of comparators, which will automatically enable them for any buffer this plugin is active for.
+
+The suggested sorting can be enabled by providing the following configuration when setting up the plugin:
 
 ```lua
-local cmp = require('cmp')
-local compare = require('cmp.config.compare')
-cmp.setup({
+require('py-requirements').setup({
     ...
-    sorting = {
-        priority_weight = 2,
-        comparators = {
-            compare.exact,
-            compare.score,
-            compare.sort_text,
-            compare.offset,
-            ...
-        },
-    },
-    ...
+    cmp_sorting = require("py-requirements.cmp").sort_by.version
 })
 ```
 
